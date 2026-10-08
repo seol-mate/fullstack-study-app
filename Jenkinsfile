@@ -37,6 +37,8 @@ pipeline {
 
     stage('Typecheck') {
       steps {
+        // LayoutProps 같은 라우트 타입은 .next에 생성되므로, 깨끗한 체크아웃에서는 먼저 만들어야 한다.
+        sh 'npx next typegen'
         sh 'npx tsc --noEmit'
       }
     }
