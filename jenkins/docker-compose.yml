@@ -1,0 +1,15 @@
+# 로컬 CI용 Jenkins. 실행: docker compose -f jenkins/docker-compose.yml up -d --build
+# 접속: http://localhost:8080 (초기 비밀번호: docker compose -f jenkins/docker-compose.yml logs jenkins)
+name: my-app-jenkins
+
+services:
+  jenkins:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+volumes:
+  jenkins_home:
