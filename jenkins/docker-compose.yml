@@ -1,15 +1,19 @@
-# 로컬 CI용 Jenkins. 실행: docker compose -f jenkins/docker-compose.yml up -d --build
+# 로컬 CI/CD용 Jenkins. 실행: docker compose -f jenkins/docker-compose.yml up -d --build
 # 접속: http://localhost:8080 (초기 비밀번호: docker compose -f jenkins/docker-compose.yml logs jenkins)
 name: my-app-jenkins
 
 services:
   jenkins:
     build: .
+    # 호스트 Docker 소켓을 쓰려면 root가 필요하다. 소켓 접근은 호스트 Docker 제어 권한과 같으므로
+    # 신뢰할 수 있는 로컬 연습 환경에서만 사용하고, 운영 서버에서는 이 구성을 쓰지 않는다.
+    user: root
     restart: unless-stopped
     ports:
       - "127.0.0.1:8080:8080"
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   jenkins_home:

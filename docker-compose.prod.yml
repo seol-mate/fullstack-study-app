@@ -1,0 +1,56 @@
+# 운영(배포)용. Jenkins가 이미지를 빌드한 뒤 APP_TAG(빌드 번호)로 실행한다.
+# 필요한 환경변수: APP_TAG, POSTGRES_PASSWORD, SESSION_SECRET, (선택) ANTHROPIC_API_KEY
+# POSTGRES_PASSWORD는 DATABASE_URL에 그대로 들어가므로 URL 특수문자가 없는 값(영문/숫자)을 쓴다.
+name: my-app-prod
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: my_app
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d my_app"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # 배포 시 한 번만 실행: docker compose --profile migrate run --rm migrate
+  migrate:
+    image: my-app-migrate:${APP_TAG:?APP_TAG is required}
+    profiles: ["migrate"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/my_app
+
+  app:
+    image: my-app:${APP_TAG:?APP_TAG is required}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/my_app
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET is required}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports:
+      - "127.0.0.1:3100:3000"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/login').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
+
+volumes:
+  pgdata:

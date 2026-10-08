@@ -1,0 +1,17 @@
+.git
+node_modules
+.next
+storybook-static
+src/generated
+
+# 비밀 값은 이미지에 넣지 않는다.
+.env*
+!.env.example
+
+# 배포/CI 설정은 앱 이미지에 필요 없다.
+Jenkinsfile
+jenkins
+docker-compose*.yml
+Dockerfile
+.dockerignore
+*.log
