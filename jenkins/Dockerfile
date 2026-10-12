@@ -1,6 +1,7 @@
 # 로컬 CI/CD용 Jenkins 이미지.
 # - Node.js(프로젝트와 같은 24.x): 파이프라인이 직접 npm을 쓰도록 포함
-# - Docker CLI + compose 플러그인: 호스트의 Docker 데몬(소켓 마운트)으로 이미지 빌드/배포
+# - Docker CLI + buildx + compose 플러그인: 호스트의 Docker 데몬(소켓 마운트)으로 이미지 빌드/배포
+#   (buildx가 없으면 구형 빌더가 쓰여 캐시 오류가 날 수 있다)
 FROM node:24-bookworm-slim AS node
 
 FROM jenkins/jenkins:lts-jdk21
@@ -17,6 +18,6 @@ RUN apt-get update \
  && curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc \
  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo $VERSION_CODENAME) stable" > /etc/apt/sources.list.d/docker.list \
  && apt-get update \
- && apt-get install -y --no-install-recommends docker-ce-cli docker-compose-plugin \
+ && apt-get install -y --no-install-recommends docker-ce-cli docker-buildx-plugin docker-compose-plugin \
  && rm -rf /var/lib/apt/lists/*
 # 소켓 접근 권한 때문에 compose에서 root로 실행한다(로컬 연습 환경 전용).
