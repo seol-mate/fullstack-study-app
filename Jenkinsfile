@@ -71,8 +71,7 @@ pipeline {
       steps {
         withCredentials([
           string(credentialsId: 'app-postgres-password', variable: 'POSTGRES_PASSWORD'),
-          string(credentialsId: 'app-session-secret', variable: 'SESSION_SECRET'),
-          string(credentialsId: 'app-anthropic-api-key', variable: 'ANTHROPIC_API_KEY')
+          string(credentialsId: 'app-session-secret', variable: 'SESSION_SECRET')
         ]) {
           // 1) DB 기동 → 2) 마이그레이션 → 3) 앱 교체. --wait는 healthcheck 통과까지 기다리며 스모크 테스트를 겸한다.
           sh '$COMPOSE up -d --wait db'
