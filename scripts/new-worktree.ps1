@@ -1,6 +1,6 @@
 # 병렬 작업용 git worktree 생성
 # 사용: powershell -File scripts/new-worktree.ps1 <이름> [-Port 3001]
-# 결과: ..\my-app-wt\<이름> (브랜치 work/<이름>), .env.local 복사, npm ci 완료 상태
+# 결과: ..\fullstack-notes-app-wt\<이름> (브랜치 work/<이름>), .env.local 복사, npm ci 완료 상태
 param(
   [Parameter(Mandatory = $true)][string]$Name,
   [int]$Port = 0
@@ -8,7 +8,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $root = (git rev-parse --show-toplevel).Trim()
-$dest = Join-Path (Split-Path $root -Parent) "my-app-wt\$Name"
+$dest = Join-Path (Split-Path $root -Parent) "fullstack-notes-app-wt\$Name"
 $branch = "work/$Name"
 
 git -C $root worktree add -b $branch $dest main

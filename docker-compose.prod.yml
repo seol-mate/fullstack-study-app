@@ -14,15 +14,15 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d my_app"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d my_app" ]
       interval: 5s
       timeout: 3s
       retries: 10
 
   # 배포 시 한 번만 실행: docker compose --profile migrate run --rm migrate
   migrate:
-    image: my-app-migrate:${APP_TAG:?APP_TAG is required}
-    profiles: ["migrate"]
+    image: fullstack-notes-app-migrate:${APP_TAG:?APP_TAG is required}
+    profiles: [ "migrate" ]
     depends_on:
       db:
         condition: service_healthy
@@ -30,7 +30,7 @@ services:
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/my_app
 
   app:
-    image: my-app:${APP_TAG:?APP_TAG is required}
+    image: fullstack-notes-app:${APP_TAG:?APP_TAG is required}
     restart: unless-stopped
     depends_on:
       db:

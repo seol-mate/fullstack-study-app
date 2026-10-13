@@ -1,4 +1,4 @@
-# my-app
+# fullstack-notes-app
 
 TypeScript + Next.js (App Router) 프로젝트.
 
@@ -44,5 +44,6 @@ TypeScript + Next.js (App Router) 프로젝트.
 - 기본은 Server Component, 상호작용이 필요할 때만 `"use client"` 사용
 - 스타일은 Tailwind CSS(+ shadcn/ui) 기본, 유틸리티로 부족할 때만 CSS Modules (`*.module.css`) 사용
 - 세션(`cookies()`)을 읽는 컴포넌트는 반드시 `<Suspense>` 안에 둔다 (`cacheComponents` 활성화)
+- 에러 처리를 항상 추가한다: 비동기 호출·DB·외부 API 등 실패할 수 있는 코드는 `try/catch`(또는 `.catch`)로 처리하고, 실패를 삼키지 말고 적절히 처리(사용자용 메시지 반환, 로그 등)한다. 에러 로그·응답에 비밀번호/해시/토큰을 노출하지 않는다. (`redirect()`는 에러를 throw하므로 `try/catch` 안에서 호출하지 말고 밖에서 호출)
 - 커밋 전 `npm run lint`와 `npx tsc --noEmit` 통과 확인
 - 이 Next.js 버전은 기존 지식과 다를 수 있음 — 코드 작성 전 `node_modules/next/dist/docs/`의 관련 문서를 먼저 확인 (`AGENTS.md` 참고)

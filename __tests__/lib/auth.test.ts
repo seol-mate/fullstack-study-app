@@ -27,7 +27,7 @@ beforeEach(() => {
 });
 
 describe("getCurrentUser", () => {
-  it("세션이 없으면 /login 으로 redirect", async () => {
+  it ("세션이 없으면 /login 으로 redirect", async () => {
     mockGetSession.mockResolvedValue(undefined);
     await expect(getCurrentUser()).rejects.toThrow("REDIRECT:/login");
     expect(mockFindUnique).not.toHaveBeenCalled();
