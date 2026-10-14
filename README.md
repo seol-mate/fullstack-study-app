@@ -1,4 +1,4 @@
-# fullstack-notes-app
+# fullstack-study-app
 
 Next.js App Router 기반의 관리자 계정 관리 예제입니다. 계정은 회원가입이 아니라 관리자가 생성하며, 로그인 세션과 사용자 권한은 서버에서 확인합니다.
 

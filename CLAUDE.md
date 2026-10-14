@@ -1,4 +1,4 @@
-# fullstack-notes-app
+# fullstack-study-app
 
 TypeScript + Next.js (App Router) 프로젝트.
 

@@ -59,8 +59,8 @@ pipeline {
         expression { env.GIT_BRANCH in ['origin/main', 'main'] }
       }
       steps {
-        sh 'docker build --target migrate -t fullstack-notes-app-migrate:${APP_TAG} .'
-        sh 'docker build -t fullstack-notes-app:${APP_TAG} .'
+        sh 'docker build --target migrate -t fullstack-study-app-migrate:${APP_TAG} .'
+        sh 'docker build -t fullstack-study-app:${APP_TAG} .'
       }
     }
 
