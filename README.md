@@ -10,7 +10,7 @@ Next.js App Router 기반의 관리자 계정 관리 예제입니다. 계정은 
 - JWT 세션 쿠키와 PostgreSQL 기반 사용자 저장
 - Vitest 단위 테스트와 Storybook UI 개발 환경
 
-홈(`/`)은 현재 Next.js 시작 화면입니다.
+홈(`/`)에서 3단계 학습 기록을 작성할 수 있습니다. Spring Boot API 구현과 실행 방법은 [spring-api/README.md](./spring-api/README.md)를 참고하세요.
 
 ## 시작하기
 
@@ -79,6 +79,7 @@ Next.js App Router 기반의 관리자 계정 관리 예제입니다. 계정은 
 - `src/proxy.ts`: 보호 경로의 세션 기반 낙관적 검사
 - `prisma/schema.prisma`: PostgreSQL 사용자 및 역할 스키마
 - `prisma/seed.ts`: 초기 관리자 생성
+- `spring-api/`: Spring Boot 학습 기록 API. 실행 방법과 요청 형식은 [spring-api/README.md](./spring-api/README.md)를 참고합니다.
 - `__tests__/`: Vitest 테스트
 
 ## 인증과 권한

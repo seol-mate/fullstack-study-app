@@ -45,3 +45,8 @@ next-env.d.ts
 storybook-static
 
 /src/generated/prisma
+
+# Spring Boot
+/spring-api/target/
+
+/spring-api/config.properties

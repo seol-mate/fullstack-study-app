@@ -1,0 +1,4 @@
+spring.datasource.url=jdbc:postgresql://localhost:5432/study_api
+spring.datasource.username=postgres
+spring.datasource.password=change-me
+server.port=8081

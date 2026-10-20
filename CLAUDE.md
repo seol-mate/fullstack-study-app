@@ -28,6 +28,7 @@ TypeScript + Next.js (App Router) 프로젝트.
 - `src/lib/auth.ts` — `getCurrentUser()`, `requireAdmin()` (DB 기준으로 사용자/권한 확인)
 - `src/app/actions/` — Server Action (`auth.ts` 로그인/로그아웃, `users.ts` 관리자 계정 생성)
 - `src/proxy.ts` — 세션 쿠키 기반 낙관적 라우트 보호 (`/dashboard`, `/admin`)
+- `spring-api/` — 학습 기록용 Spring Boot REST API (별도 Maven 프로젝트)
 - `public/` — 정적 파일
 - import alias: `@/*` → `src/*`
 - 환경변수: `.env.example` 참고 (`SESSION_SECRET`, `DATABASE_URL`, `ADMIN_*`는 `.env.local`에 설정)
@@ -41,6 +42,7 @@ TypeScript + Next.js (App Router) 프로젝트.
 ## 규칙
 
 - TypeScript strict 모드 유지, `any` 사용 지양
+- 중첩 삼항 연산자로 조건부 UI나 값을 표현하지 않는다. 분기 의미가 드러나도록 early return이 있는 함수 또는 명시적인 조건문으로 분리한다.
 - 기본은 Server Component, 상호작용이 필요할 때만 `"use client"` 사용
 - 스타일은 Tailwind CSS(+ shadcn/ui) 기본, 유틸리티로 부족할 때만 CSS Modules (`*.module.css`) 사용
 - 세션(`cookies()`)을 읽는 컴포넌트는 반드시 `<Suspense>` 안에 둔다 (`cacheComponents` 활성화)
