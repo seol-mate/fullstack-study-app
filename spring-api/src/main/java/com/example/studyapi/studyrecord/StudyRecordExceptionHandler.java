@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.List;
 
@@ -42,6 +43,27 @@ public class StudyRecordExceptionHandler {
                 .body(new ApiErrorResponse(
                         "요청 본문이 올바른 JSON 형식이 아닙니다.",
                         List.of()
+                ));
+    }
+
+    /** 요청한 id의 학습 기록이 없으면 404 응답을 전달합니다. */
+    @ExceptionHandler(StudyRecordNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleNotFound() {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ApiErrorResponse("학습 기록을 찾을 수 없습니다.", List.of()));
+    }
+
+    /** 경로의 id가 숫자가 아니면 400 응답을 전달합니다. */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidPathValue(
+            MethodArgumentTypeMismatchException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ApiErrorResponse(
+                        "요청 값이 올바르지 않습니다.",
+                        List.of(exception.getName() + ": 올바른 값이 아닙니다")
                 ));
     }
 

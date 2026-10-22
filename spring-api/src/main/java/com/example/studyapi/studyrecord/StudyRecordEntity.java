@@ -62,6 +62,23 @@ public class StudyRecordEntity {
         this.createdAt = createdAt;
     }
 
+    /** 기존 기록의 내용을 새 값으로 바꿉니다. 생성 시각은 유지합니다. */
+    public void update(
+            String name,
+            LocalDate birthDate,
+            LocalDate recordDate,
+            String content,
+            String learned,
+            String nextStudy
+    ) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.recordDate = recordDate;
+        this.content = content;
+        this.learned = learned;
+        this.nextStudy = nextStudy;
+    }
+
     public Long getId() {
         return id;
     }
